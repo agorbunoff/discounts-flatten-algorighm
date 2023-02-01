@@ -9,13 +9,13 @@ def index(l, x):
 
 
 def flatten(l):
-    wages = defaultdict(int)
+    occurrences = defaultdict(int)
     pairs = set()
 
     for row in l:
-        # calculate wages (sum occurrences)
+        # calculate num of occurrences
         for i in row:
-            wages[i] += 1
+            occurrences[i] += 1
 
         # add unique pairs to the set: {(1, 2), (2, 4), ...}
         for x, y in zip(row, row[1:]):
@@ -23,7 +23,7 @@ def flatten(l):
                 pairs.add((x, y))
 
     # sort set of pairs by wage x and then y
-    pairs = sorted(pairs, key=lambda x: (-wages[x[0]], -wages[x[1]]))
+    pairs = sorted(pairs, key=lambda x: (-occurrences[x[0]], -occurrences[x[1]]))
 
     # build list of uniques values in correct order
     temp_out = []
@@ -51,7 +51,7 @@ def flatten(l):
     # build final list: repeat x times of each unique value
     out = []
     for x in temp_out:
-        out.extend([x] * wages[x])
+        out.extend([x] * occurrences[x])
 
     return out
 
